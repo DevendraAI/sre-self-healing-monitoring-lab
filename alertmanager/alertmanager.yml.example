@@ -1,0 +1,32 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: "slack-alerts"
+
+  routes:
+    - matchers:
+        - alertname="NodeExporterDown"
+      receiver: "node-exporter-remediation"
+      continue: true
+
+receivers:
+  - name: "slack-alerts"
+    slack_configs:
+      - api_url: "<YOUR_SLACK_WEBHOOK_URL>"
+        channel: "#sre-alerts"
+        send_resolved: true
+        title: '{{ if eq .Status "firing" }}🚨 FIRING{{ else }}✅ RESOLVED{{ end }}: {{ .CommonLabels.alertname }}'
+        text: |
+          *Alert:* {{ .CommonLabels.alertname }}
+          *Severity:* {{ .CommonLabels.severity }}
+
+          {{ range .Alerts }}
+          *Summary:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          *Instance:* {{ .Labels.instance }}
+          {{ end }}
+
+  - name: "node-exporter-remediation"
+    webhook_configs:
+      - url: "http://127.0.0.1:8080/remediate"
