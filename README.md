@@ -38,3 +38,25 @@ The main objective was to build a monitoring system that can:
                               │
                               ▼
                     Node Exporter Restart
+
+## 📸 Project Evidence
+
+### 1. 📊 Grafana Monitoring Dashboard
+
+![Grafana Dashboard](screenshots/01-grafana-dashboard.png)
+
+### 2. 🚨 Node Exporter Failure Detection
+
+![Node Exporter Firing](screenshots/02-node-exporter-firing.png)
+
+### 3. 🔔 Slack Alert
+
+![Slack Firing](screenshots/03-slack-firing.png)
+
+### 4. 🔄 Automated Self-Healing
+
+![Automated Remediation](screenshots/04-remediation-log.png)
+
+### 5. ✅ Alert Recovery
+
+![Slack Resolved](screenshots/05-slack-resolved.png)
